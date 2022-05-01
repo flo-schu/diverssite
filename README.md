@@ -231,6 +231,17 @@ The code is formatted using [black](https://black.readthedocs.io/en/stable/).
 
 The imports are sorted using [isort](https://pycqa.github.io/isort/).
 
+Follow the respective installation instructions. Then run:
+```bash
+black .
+```
+or 
+```bash
+isort .
+```
+
+in the repository root directory.
+
 ## Maintenance
 
 server restart:
