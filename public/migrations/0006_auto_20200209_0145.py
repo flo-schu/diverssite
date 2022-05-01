@@ -13,9 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="post",
             name="page",
-            field=models.CharField(
-                choices=[("home", "Home"), ("tplb", "Events")], max_length=50, null=True
-            ),
+            field=models.CharField(choices=[("home", "Home"), ("tplb", "Events")], max_length=50, null=True),
         ),
         migrations.AlterField(
             model_name="post",

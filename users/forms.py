@@ -1,26 +1,18 @@
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Div, Fieldset, Layout
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm, UserCreationForm
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import (
-    UserCreationForm,
-    PasswordResetForm,
-    SetPasswordForm,
-)
+
 from .models import Profile
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, Div
+
 
 # Sign Up Form
 class SignupForm(UserCreationForm):
-    first_name = forms.CharField(
-        max_length=30, required=False, help_text="Optional", label="First Name"
-    )
-    last_name = forms.CharField(
-        max_length=30, required=False, help_text="Optional", label="Last Name"
-    )
-    email = forms.EmailField(
-        max_length=254, label="E-Mail", help_text="Enter a valid email address"
-    )
+    first_name = forms.CharField(max_length=30, required=False, help_text="Optional", label="First Name")
+    last_name = forms.CharField(max_length=30, required=False, help_text="Optional", label="Last Name")
+    email = forms.EmailField(max_length=254, label="E-Mail", help_text="Enter a valid email address")
 
     validator = forms.CharField(
         required=True,
@@ -71,9 +63,7 @@ class ProfileForm(forms.ModelForm):
 
     trikotnummer = forms.CharField(
         required=True,
-        error_messages={
-            "unique": "Occupied :-( Check the wiki to see which numbers are still free"
-        },
+        error_messages={"unique": "Occupied :-( Check the wiki to see which numbers are still free"},
     )
 
     def __init__(self, *args, **kwargs):

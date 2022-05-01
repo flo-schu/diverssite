@@ -1,7 +1,6 @@
-from django.db import models
 from django.conf import settings
 from django.core.mail import send_mail
-
+from django.db import models
 
 # Create your models here.
 
@@ -13,9 +12,7 @@ class Message(models.Model):
         on_delete=models.PROTECT,
         related_name="message_sender_set",
     )
-    recipients = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name="message_recipients_set"
-    )
+    recipients = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="message_recipients_set")
     subject = models.CharField(max_length=100)
     body = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)

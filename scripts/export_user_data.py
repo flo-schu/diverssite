@@ -1,6 +1,7 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 from django.contrib.auth.models import User
+
 from users.models import Profile
 
 users = pd.DataFrame(User.objects.all().values())
@@ -16,8 +17,6 @@ data = (
 
 
 data["list_name"] = data["first_name"] + " " + data["last_name"]
-data["list_name"] = np.where(
-    data["list_name"] == " ", data["username"], data["list_name"]
-)
+data["list_name"] = np.where(data["list_name"] == " ", data["username"], data["list_name"])
 
 data.to_csv("data/userdata.csv")

@@ -1,8 +1,7 @@
-from django.urls import path
-from django.urls import reverse_lazy
 from django.contrib.auth import views
+from django.urls import path, reverse_lazy
 
-from users.views import Login, SignUpView, RegComplete, ProfileView, AccountActivateView
+from users.views import AccountActivateView, Login, ProfileView, RegComplete, SignUpView
 
 app_name = "users"
 
@@ -25,9 +24,7 @@ urlpatterns = [
     ),
     path(
         "password_reset/done/",
-        views.PasswordResetDoneView.as_view(
-            template_name="users/password_reset_done.html"
-        ),
+        views.PasswordResetDoneView.as_view(template_name="users/password_reset_done.html"),
         name="password_reset_done",
     ),
     path(
@@ -40,29 +37,21 @@ urlpatterns = [
     ),
     path(
         "password_reset/complete/",
-        views.PasswordResetCompleteView.as_view(
-            template_name="users/password_reset_complete.html"
-        ),
+        views.PasswordResetCompleteView.as_view(template_name="users/password_reset_complete.html"),
         name="password_reset_complete",
     ),
-    path(
-        "signup/", SignUpView.as_view(template_name="users/signup.html"), name="signup"
-    ),
+    path("signup/", SignUpView.as_view(template_name="users/signup.html"), name="signup"),
     # path('activate/', AccountActivateView.as_view(template_name='account_activation.html'), name = 'activate'),
     path("thanks/", RegComplete.as_view(), name="thanks"),
     path("profile/", ProfileView.as_view(), name="profile"),
     path(
         "change-password/",
-        views.PasswordChangeView.as_view(
-            success_url=reverse_lazy("users:password_change_done")
-        ),
+        views.PasswordChangeView.as_view(success_url=reverse_lazy("users:password_change_done")),
         name="change_password",
     ),
     path(
         "password_change_done/",
-        views.PasswordChangeDoneView.as_view(
-            template_name="users/password_change_done.html"
-        ),
+        views.PasswordChangeDoneView.as_view(template_name="users/password_change_done.html"),
         name="password_change_done",
     ),
 ]

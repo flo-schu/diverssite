@@ -225,8 +225,11 @@ export email_port=587
 ```
 
 
-## Code Formatting with Black
+## Code Formatting and Conventions:
+
 The code is formatted using [black](https://black.readthedocs.io/en/stable/).
+
+The imports are sorted using [isort](https://pycqa.github.io/isort/).
 
 ## Maintenance
 

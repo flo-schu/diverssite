@@ -1,8 +1,9 @@
-from django.shortcuts import render
-from django.views import generic, View
-from .models import Category, Article
-from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import render
+from django.utils import timezone
+from django.views import View, generic
+
+from .models import Article, Category
 
 # Create your views here.
 
@@ -20,9 +21,7 @@ class IndexView(View):
             articles = Article.objects.all()
         else:
             articles = Article.objects.filter(visibility="public")
-        articles_query = articles.filter(pub_date__lte=timezone.now()).order_by(
-            "-pub_date"
-        )[:5]
+        articles_query = articles.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[:5]
 
         category_system = dict()
         for cat in category_query:

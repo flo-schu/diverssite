@@ -1,9 +1,10 @@
-from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.exceptions import ValidationError
+
 
 # Create your models here.
 def user_profile_directory_path(instance, filename):
@@ -13,9 +14,7 @@ def user_profile_directory_path(instance, filename):
 
 
 class Settings(models.Model):
-    registration_password = models.CharField(
-        max_length=20, help_text="Passwort wird bei der Registrierung abgefragt"
-    )
+    registration_password = models.CharField(max_length=20, help_text="Passwort wird bei der Registrierung abgefragt")
 
     def __str__(self):
         return "User Settings"
@@ -43,9 +42,7 @@ class Profile(models.Model):
     street = models.CharField(max_length=50, null=True, blank=True)
     place = models.CharField(max_length=50, null=True, blank=True)
     zip = models.CharField(max_length=50, null=True, blank=True)
-    picture = models.ImageField(
-        upload_to=user_profile_directory_path, null=True, blank=True
-    )
+    picture = models.ImageField(upload_to=user_profile_directory_path, null=True, blank=True)
 
     def image_url(self):
         """

@@ -1,16 +1,19 @@
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
-from django.urls import reverse
-from django.views import View
-from django.utils import timezone
+import datetime as dt
+
+from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms import formset_factory
-from django.contrib.auth.models import AnonymousUser, User
-import datetime as dt
-from .forms import EventForm
-from .models import Event, Participation, Categ
-from wiki.models import Article, Display
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse
+from django.utils import timezone
+from django.views import View
+
 from users.models import Profile
+from wiki.models import Article, Display
+
+from .forms import EventForm
+from .models import Categ, Event, Participation
 
 
 def get_categ(slug):
@@ -22,11 +25,7 @@ def get_categ(slug):
 
 def query_events(slug):
     t0 = dt.datetime.combine(dt.datetime.today(), dt.time(0, 0, 0))
-    return (
-        Event.objects.filter(categ__in=get_categ(slug))
-        .filter(date__gte=timezone.make_aware(t0))
-        .order_by("date")
-    )
+    return Event.objects.filter(categ__in=get_categ(slug)).filter(date__gte=timezone.make_aware(t0)).order_by("date")
 
 
 def get_profile(party, gender):
@@ -105,17 +104,14 @@ class IndexView(View):
     def get(self, request, slug=None):
         events = query_events(slug)
         user = get_user_or_anonymous(request.user)
-        participation, participants, girls, boys, divers = query_participation(
-            user, events
-        )
+        participation, participants, girls, boys, divers = query_participation(user, events)
         gcount = present_on_parties(girls)
         bcount = present_on_parties(boys)
         dcount = present_on_parties(divers)
 
         initial = {
             "particip": [
-                {"id": p.id, "event": p.event_id, "person": p.person_id, "part": p.part}
-                for p in participation
+                {"id": p.id, "event": p.event_id, "person": p.person_id, "part": p.part} for p in participation
             ]
         }
         # create form instances
@@ -131,9 +127,7 @@ class IndexView(View):
         context = {
             "posts": posts,
             "formset": forms,
-            "eventforms": zip(
-                events, forms, participants, girls, boys, divers, gcount, bcount, dcount
-            ),
+            "eventforms": zip(events, forms, participants, girls, boys, divers, gcount, bcount, dcount),
             "user": request.user,
             "categories": get_categ(None),
         }
@@ -149,9 +143,7 @@ class IndexView(View):
                 if form.is_valid():
                     if form.has_changed():
                         data = form.cleaned_data
-                        participation_entry = Participation.objects.filter(
-                            person=data["person"], event=data["event"]
-                        )
+                        participation_entry = Participation.objects.filter(person=data["person"], event=data["event"])
                         assert len(participation_entry) == 1
                         participation = participation_entry[0]
                         participation.part = data["part"]

@@ -1,8 +1,8 @@
+from django.conf import settings
 from django.db import models
+from django.utils.text import slugify
 from markdownx.models import MarkdownxField
 from markdownx.utils import markdownify
-from django.utils.text import slugify
-from django.conf import settings
 from simple_history.models import HistoricalRecords
 
 # Create your models here.
@@ -42,9 +42,7 @@ class Article(models.Model):
     slug = models.SlugField(max_length=50)
     visibility = models.CharField(max_length=20, default="public", choices=vis_choice)
     show_on_pages = models.ManyToManyField(Display)
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, blank=True
-    )
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, blank=True)
     history = HistoricalRecords()
 
     # Create your models here.

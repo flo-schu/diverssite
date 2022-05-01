@@ -1,18 +1,13 @@
-from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views import generic
+from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
 from django.forms import formset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, reverse
-from .forms import (
-    SignupForm,
-    ProfileForm,
-    UpdateUserForm,
-    AddressForm,
-    ProfilePictureForm,
-)
+from django.views import generic
+
+from .forms import AddressForm, ProfileForm, ProfilePictureForm, SignupForm, UpdateUserForm
 from .models import Profile, Settings
 
 
@@ -33,9 +28,7 @@ class SignUpView(generic.View):
         if (
             signup_form.is_valid()
             and signup_form.cleaned_data["validator"]
-            == Settings.objects.values("registration_password")[0][
-                "registration_password"
-            ]
+            == Settings.objects.values("registration_password")[0]["registration_password"]
         ):
             user = signup_form.save(commit=False)
             user.save()
@@ -44,9 +37,7 @@ class SignUpView(generic.View):
         else:
             print(
                 signup_form.cleaned_data["validator"],
-                Settings.objects.values("registration_password")[0][
-                    "registration_password"
-                ],
+                Settings.objects.values("registration_password")[0]["registration_password"],
             )
             error = "please make sure your information are correct."
             context = {
@@ -91,9 +82,7 @@ class ProfileView(LoginRequiredMixin, generic.DetailView):
         self.updateuser_form = UpdateUserForm(instance=u, prefix="user")
         self.updateprofile_form = ProfileForm(instance=self.profile, prefix="profile")
         self.updateaddress_form = AddressForm(instance=self.profile, prefix="address")
-        self.profilepicture_form = ProfilePictureForm(
-            instance=self.profile, prefix="pic"
-        )
+        self.profilepicture_form = ProfilePictureForm(instance=self.profile, prefix="pic")
 
     def get(self, request):
 
@@ -110,26 +99,13 @@ class ProfileView(LoginRequiredMixin, generic.DetailView):
 
     def post(self, request):
         self.setup_forms(request.user)
-        userform = UpdateUserForm(
-            request.POST, request.FILES, instance=request.user, prefix="user"
-        )
-        profileform = ProfileForm(
-            request.POST, request.FILES, instance=self.profile, prefix="profile"
-        )
-        addressform = AddressForm(
-            request.POST, request.FILES, instance=self.profile, prefix="address"
-        )
-        profilepictureform = ProfilePictureForm(
-            request.POST, request.FILES, instance=self.profile, prefix="pic"
-        )
+        userform = UpdateUserForm(request.POST, request.FILES, instance=request.user, prefix="user")
+        profileform = ProfileForm(request.POST, request.FILES, instance=self.profile, prefix="profile")
+        addressform = AddressForm(request.POST, request.FILES, instance=self.profile, prefix="address")
+        profilepictureform = ProfilePictureForm(request.POST, request.FILES, instance=self.profile, prefix="pic")
         print(profilepictureform)
 
-        if (
-            userform.is_valid()
-            and profileform.is_valid()
-            and addressform.is_valid()
-            and profilepictureform.is_valid()
-        ):
+        if userform.is_valid() and profileform.is_valid() and addressform.is_valid() and profilepictureform.is_valid():
             user = userform.save(commit=False)
             user.save()
             profile = profileform.save(commit=False)

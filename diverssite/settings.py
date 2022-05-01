@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from pprint import pprint
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -156,9 +157,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-EMAIL_BACKEND = os.environ.get(
-    "email_backend", "django.core.mail.backends.smtp.EmailBackend"
-)
+EMAIL_BACKEND = os.environ.get("email_backend", "django.core.mail.backends.smtp.EmailBackend")
 EMAIL_HOST = os.environ.get("email_host", "localhost")
 EMAIL_PORT = os.environ.get("email_port", 25)
 EMAIL_HOST_USER = os.environ.get("email_usr", "")

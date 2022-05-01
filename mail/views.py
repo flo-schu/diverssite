@@ -1,13 +1,15 @@
+from email.utils import parseaddr
+from json import dumps
 from urllib import request
+
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.views import View, generic
-from .models import Message
+
 from .forms import ComposeForm
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.models import User
-from json import dumps
-from email.utils import parseaddr
+from .models import Message
 
 
 class IndexView(LoginRequiredMixin, generic.ListView):
@@ -77,9 +79,7 @@ class ComposeView(LoginRequiredMixin, GroupMixin, generic.FormView):
 
     def get(self, request):
         form = ComposeForm()
-        recipients = User.objects.exclude(username="admin").values_list(
-            "first_name", "last_name", "email"
-        )
+        recipients = User.objects.exclude(username="admin").values_list("first_name", "last_name", "email")
         recipients = ["{} {} <{}>".format(r[0], r[1], r[2]) for r in recipients]
         print(recipients)
         context = {"form": form, "search_data": dumps(list(recipients))}
