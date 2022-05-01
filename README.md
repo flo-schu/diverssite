@@ -224,6 +224,10 @@ export email_pw=XXXXXX
 export email_port=587
 ```
 
+
+## Code Formatting with Black
+The code is formatted using [black](https://black.readthedocs.io/en/stable/).
+
 ## Maintenance
 
 server restart:
