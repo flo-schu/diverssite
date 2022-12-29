@@ -271,6 +271,32 @@ for changes that affect a database retrospectively, use of django-extensions `ru
   ```sudo useradd -m username```
   ```sudo passwd username```
 
+### certificates
+
+NEVER delete CERTIFICATES!!! IT IS A PAIN IN THE ASS. IF YOU NEED TO
+<https://eff-certbot.readthedocs.io/en/stable/using.html#safely-deleting-certificates>
+
+#### add subdomains
+
+it is important to include the name of the certificate first (domina name)
+and then __ALL__ other domains
+see which domains are included with `certbot certificates`
+`certbot --expand -d existing.com -d example.com -d newdomain.com`
+
+#### renew certificates
+
+`certbot renew --pre-hook "service nginx stop" --post-hook "service nginx start"`
+
+#### trouble with nginx
+
+if there are startup issues with nginx, `sudo pkill -f nginx & wait $!` can help.
+Followed by `sudo service nginx start`
+
+#### modifying automated renewal
+
+<https://eff-certbot.readthedocs.io/en/stable/using.html#modifying-the-renewal-configuration-of-existing-certificates>
+
+
 ### Backup
 
 see <https://django-dbbackup.readthedocs.io/en/master/index.html>
