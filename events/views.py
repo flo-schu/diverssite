@@ -14,6 +14,7 @@ from wiki.models import Article, Display
 
 from .forms import EventForm
 from .models import Categ, Event, Participation
+from diverssite.view_classes import LoggedinDetailView
 
 
 def get_categ(slug):
@@ -163,3 +164,18 @@ class IndexView(View):
                         participation.save()
 
         return HttpResponseRedirect(reverse("events:index"))
+
+
+
+class DetailView(LoggedinDetailView):
+    model = Event
+    template_name = "events/detail.html"
+
+    def get(self, request, id):
+        event = self.model.objects.get(id=id)
+
+        context = {
+            "event": event,
+        }
+
+        return render(request, self.template_name, context)
