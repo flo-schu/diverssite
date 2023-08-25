@@ -22,6 +22,7 @@ Framework.
    + On linux you may need to install pip ```sudo apt install python3-pip```
    + [install git if necessary](https://git-scm.com/downloads))
    + Text editor of your choice (Visual Studio Code, Pycharm, Notepad, Vim, ...) (<https://code.visualstudio.com/>).
+   + sudo apt install postgresql libpq-dev
 
 1. clone repository into new directory
    ```git clone git@github.com:flo-schu/diverssite.git```
@@ -48,7 +49,9 @@ Framework.
    Pip is the store where you can get all the tools
    update pip: ```python -m pip install --upgrade pip```
    ```pip install -r requirements.txt```
-
+   or install
+   ```pip install .```
+   
 6. create a '.env' file. This files contains all custom settings, which are
    imported when the app is launched. A different version of this is used in
    production (when the site is online), which then contains only absolutely
@@ -178,6 +181,10 @@ in the repository root directory.
 
 7. follow instructions on how to set up gunicorn and nginx.
    <https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-18-04>
+
+   to get started with nginx, check this guide. It is really helpful 
+   to understand what nginx does
+   <https://nginx.org/en/docs/beginners_guide.html>
 
    to reset the server after changes:
 
@@ -309,6 +316,25 @@ python3 manage.py mediabackup
 ```
 
 for restoring backups see the documentation
+
+### upgrade system
+
++ first open a port on ufw wtih the rule `1022/tcp` for ssh access on 
+a different port and add it in 
++ do it very slowly according to the instructions and make sure the port is added in `sudo nano /etc/ssh/sshd_config` as `Port 1022`
+
+in case the upgrade messes with the previously used python version
+follow the to ansper in <https://stackoverflow.com/questions/61541281/python-3-7-venv-broken-after-upgrade-to-ubuntu-20-04>
+
+there will be several updates to existing configuration files necessary
+it is recommended to start the services one by one and inspect error messages: `sudo systemctl start SERVICE` to check errormessages exchange `start` with `status`
+- gunicorn (potential python migration issues)
+- nginx (occupied port: <https://stackoverflow.com/questions/42303401/nginx-will-not-start-address-already-in-use> check used ports `sudo netstat -tulpn`)
+- postfix
+- dovecot (configuration files: /etc/dovecot/conf.d/10-ssl.conf /etc/dovecot/dovecot.conf)
+
+#### disable unneeded services
+`sudo systemctl disable apache2.service` --> blocks port 80
 
 ### Known Issues and Fixes
 

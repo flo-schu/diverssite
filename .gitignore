@@ -1,4 +1,6 @@
 __pycache__
+build
+*.egg-info
 .env
 venv
 testvenv
@@ -14,3 +16,4 @@ testdb
 data
 stats
 *.code-workspace
+config
