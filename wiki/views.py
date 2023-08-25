@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.views import View, generic
 from django.contrib.auth.decorators import login_required
+from diverssite.view_classes import LoggedinDetailView
 
 from .models import Article, Category, Image, File
 from . import models
@@ -57,24 +58,9 @@ def secure(request, file):
     return response
 
 
-class DetailView(UserPassesTestMixin, generic.DetailView):
+class DetailView(LoggedinDetailView):
     model = Article
-    login_url = "/users/login/"
     template_name = "wiki/detail.html"
-
-    def test_func(self):
-        """
-        test function for class UserPassesTestMixin to regulate access to
-        article
-        """
-        u = self.request.user
-        a = Article.objects.get(slug=self.kwargs["slug"])
-        if u.is_active:
-            return True
-        elif a.visibility == "public":
-            return True
-        else:
-            return False
 
     def get(self, request, slug):
         articles = get_articles_for_user(user=request.user)
