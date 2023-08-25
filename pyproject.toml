@@ -40,5 +40,5 @@ dependencies = [
     "django-extensions==3.1.5",
 ]
 
-[tool.setuptools.packages]
-find = {namespaces = false}
+[tool.setuptools]
+packages = ["diverssite"]
