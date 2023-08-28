@@ -29,8 +29,10 @@ class EventAdmin(admin.ModelAdmin):
 class CategAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
+
 class EventStatusAdmin(admin.ModelAdmin):
     pass
+
 
 class LocationAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}

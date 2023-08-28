@@ -5,6 +5,7 @@ from markdownx.models import MarkdownxField
 from markdownx.utils import markdownify
 from users.models import User
 
+
 class Categ(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50, null=True)
@@ -21,14 +22,13 @@ class Location(models.Model):
 
     def __str__(self):
         return self.name
-    
+
 
 class EventStatus(models.Model):
     status = models.CharField(max_length=50)
 
     def __str__(self):
         return self.status
-
 
 
 # Create your models here.
@@ -59,7 +59,6 @@ class Event(models.Model):
         super().save(*args, **kwargs)
 
     def join_toga(self, user):
-
         self.toga = user
 
         self.save()
@@ -71,8 +70,6 @@ class PartChoice(models.Model):
 
     def __str__(self):
         return self.choicetext
-
-
 
 
 class Participation(models.Model):

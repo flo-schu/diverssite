@@ -166,7 +166,6 @@ class IndexView(View):
         return HttpResponseRedirect(reverse("events:index"))
 
 
-
 class DetailView(LoggedinDetailView):
     model = Event
     template_name = "events/detail.html"
@@ -177,11 +176,7 @@ class DetailView(LoggedinDetailView):
 
         party = Participation.objects.filter(event=event)
 
-        context = {
-            "event": event,
-            "eventform": eventform,
-            "participants": party
-        }
+        context = {"event": event, "eventform": eventform, "participants": party}
 
         if request.user == event.toga:
             eventform = EventTogaForm(instance=event, prefix="event")
@@ -198,18 +193,14 @@ class DetailView(LoggedinDetailView):
             eventform = EventTogaForm(request.POST, request.FILES, instance=event, prefix="event")
         else:
             eventform = JoinTogaForm(request.POST, request.FILES, instance=event, prefix="event")
-            
+
         party = Participation.objects.filter(event=event)
 
         if eventform.is_valid():
             event = eventform.save(commit=False)
             event.save()
-            redirect_url = reverse('events:detail', kwargs={'id': id})
+            redirect_url = reverse("events:detail", kwargs={"id": id})
             return HttpResponseRedirect(redirect_url)
         else:
-            context = {
-                "event": event,
-                "eventform": eventform,
-                "participants": party
-            }
+            context = {"event": event, "eventform": eventform, "participants": party}
             return render(request, self.template_name, context)
