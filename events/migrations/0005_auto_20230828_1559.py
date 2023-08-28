@@ -5,15 +5,16 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('events', '0004_auto_20230828_1544'),
+        ("events", "0004_auto_20230828_1544"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='event',
-            name='status',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='events.eventstatus'),
+            model_name="event",
+            name="status",
+            field=models.ForeignKey(
+                blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to="events.eventstatus"
+            ),
         ),
     ]

@@ -6,26 +6,31 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('events', '0001_squashed_0012_auto_20201105_1738'),
+        ("events", "0001_squashed_0012_auto_20201105_1738"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='event',
-            name='toga',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='toga_user', to=settings.AUTH_USER_MODEL),
+            model_name="event",
+            name="toga",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="toga_user",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='participation',
-            name='selected',
+            model_name="participation",
+            name="selected",
             field=models.BooleanField(default=False),
         ),
         migrations.AlterField(
-            model_name='event',
-            name='name',
+            model_name="event",
+            name="name",
             field=models.CharField(max_length=200),
         ),
     ]

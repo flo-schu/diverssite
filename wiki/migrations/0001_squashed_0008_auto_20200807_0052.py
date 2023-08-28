@@ -7,7 +7,6 @@ import wiki.models
 
 
 class Migration(migrations.Migration):
-
     replaces = [
         ("wiki", "0001_initial"),
         ("wiki", "0002_auto_20200228_2124"),

@@ -5,7 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("events", "0001_squashed_0012_auto_20201105_1738"),
         ("wiki", "0006_auto_20221226_1758"),

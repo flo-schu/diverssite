@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     replaces = [
         ("public", "0001_initial"),
         ("public", "0002_auto_20200207_0917"),

@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import DetailView
 
+
 class LoggedinDetailView(UserPassesTestMixin, DetailView):
     login_url = "/users/login/"
 

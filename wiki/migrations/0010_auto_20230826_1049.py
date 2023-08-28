@@ -5,15 +5,18 @@ import wiki.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('wiki', '0009_image_thumbnail'),
+        ("wiki", "0009_image_thumbnail"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='image',
-            name='thumbnail',
-            field=models.ImageField(default='/static/images/default_profile_thumbnail.png', editable=False, upload_to=wiki.models.file_directory_path_tumbnail),
+            model_name="image",
+            name="thumbnail",
+            field=models.ImageField(
+                default="/static/images/default_profile_thumbnail.png",
+                editable=False,
+                upload_to=wiki.models.file_directory_path_tumbnail,
+            ),
         ),
     ]
