@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col">
+        <form method="post">
+            {% csrf_token %}
+            {{ eventform.media }}
+            <h3>
+                Event: {{eventform.name}}
+            </h3>
+            🗓️ {{eventform.date}} - {{eventform.end_date}}
+            <br>
+            📍 {{eventform.location}}
+            <hr>
+            <div>
+                {% if event.categ.name == "training" %}
+                <span class="badge badge-warning mt-0" type="button"
+                    onclick="window.location.href='{% url 'events:categ' event.categ.slug %}';">
+                    training
+                </span>
+                {% elif event.categ.name == "tournament" %}
+                <span class="badge badge-success mt-0" type="button"
+                    onclick="window.location.href='{% url 'events:categ' event.categ.slug %}';">
+                    tournament
+                </span>
+                {% elif event.categ.name == "social" %}
+                <span class="badge badge-primary mt-0" type="button"
+                    onclick="window.location.href='{% url 'events:categ' event.categ.slug %}';">
+                    social
+                </span>
+                {% else %}
+                <span class="badge badge-secondary mt-0" type="button"
+                    onclick="window.location.href='{% url 'events:categ' event.categ.slug %}';">
+                    other
+                </span>
+                {% endif %}
+                {{eventform.categ}}
+            </div>
+            {% if event.categ.name == "tournament" %}
+
+            <div class="font-italic">
+                Tournament organization (Toga): {{eventform.toga}}
+                <br>
+                Status: {{eventform.status}}
+                {% if event.status.status == "open" %} ⭕
+                {% elif event.status.status == "registered" %} 💌 ❓
+                {% elif event.status.status == "accepted" %} ✔️
+                {% elif event.status.status == "rejected" %} ❌
+                {% else %}
+                {% endif %}
+
+            </div>
+            {% else %}
+            <div hidden="true">
+                Tournament organization (Toga): {{eventform.toga}}
+            </div>
+            {% endif %}
+            <hr>
+            <small>
+                {{ eventform.description }}
+            </small>
+            <hr>
+            <button class="btn btn-light m-0" type="submit">📝 Submit</button>
+        </form>
+        
+    </div>
+
+</div>
+
+

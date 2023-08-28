@@ -1,0 +1,75 @@
+{% if user.is_authenticated %}
+<div class="row">
+    <div class="col-sm">
+
+        <div class="h4 mt-4">
+            Participants
+        </div>
+
+        <div class="pl-0 pt-0 pr-2 pb-1 mb-0 mt-0">
+            <div class="row">
+                <div class="col">
+                    <small>who's in? 👍</small>
+                </div>
+            </div>
+            <!-- <hr style="margin:1px; padding:0px"> -->
+            <div class="row float-left pl-0 ml-0" style="line-height:1;">
+                {% for p in participants %}
+                {% if p.part.choice == "y" %}
+                <div class="col m-0 p-0">
+                    <img src="{{ p.person.profile.thumb_url }}"
+                    class="img m-0 p-0"
+                    alt="{{ p.person.first_name }}"
+                    style="object-fit:cover; width:70px; height:70px; border: solid 0px #CCC"/>
+                    <br class="p-0 m-0">
+                    <small class="pt-0 mt-0">{{ p.person.first_name }}</small>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="pl-0 pt-0 pr-2 pb-1 mb-0 mt-0">
+            <div class="row">
+                <div class="col">
+                    <small>who's out? 👎</small>
+                </div>
+            </div>
+            <div class="row float-left pl-0 ml-0" style="line-height:1;">
+                {% for p in participants %}
+                {% if p.part.choice == "n" %}
+                <div class="col m-0 p-0">
+                    <img src="{{ p.person.profile.thumb_url }}"
+                            class="img m-0 p-0"
+                            alt="{{ p.person.first_name }}"
+                            style="object-fit:cover; width:70px; height:70px; border: solid 1px #CCC"/>
+                    <br>
+                    <small>{{ p.person.first_name }}</small>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="pl-0 pt-0 pr-2 pb-1 mb-0 mt-0">
+            <div class="row">
+                <div class="col">
+                    <small>who doesn't know yet? 🤔</small>
+                </div>
+            </div>
+            <div class="row float-left pl-0 ml-0" style="line-height:1;">
+                {% for p in participants %}
+                {% if p.part.choice == "m" %}
+                <div class="col m-0 p-0">
+                    <img src="{{ p.person.profile.thumb_url }}"
+                    class="img m-0 p-0"
+                    alt="{{ p.person.first_name }}"
+                    style="object-fit:cover; width:70px; height:70px; border: solid 1px #CCC"/>
+                    <br>
+                    <small>{{ p.person.first_name }}</small>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>

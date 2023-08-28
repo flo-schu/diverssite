@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-sm">
+
+        {% if user.is_staff %}
+        <div class="d-flex w-100 justify-content-between m-0">
+            
+            <a class="btn btn-light m-0" role="button"
+                href="{% url 'admin:events_event_change' event.id %}?next={{ request.path }}">
+                ✏️ edit event
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>

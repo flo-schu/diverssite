@@ -7,6 +7,34 @@
       }
     },
     {
+        "model": "events.eventstatus",
+        "pk": 1,
+        "fields": {
+            "status": "open"
+      }
+    },
+    {
+        "model": "events.eventstatus",
+        "pk": 2,
+        "fields": {
+            "status": "registered"
+      }
+    },
+    {
+        "model": "events.eventstatus",
+        "pk": 3,
+        "fields": {
+            "status": "accepted"
+      }
+    },
+    {
+        "model": "events.eventstatus",
+        "pk": 4,
+        "fields": {
+            "status": "declined"
+      }
+    },
+    {
         "model": "events.categ",
         "pk": 2,
         "fields": {
