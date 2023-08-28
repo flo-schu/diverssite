@@ -56,7 +56,6 @@ class UpdateUserForm(forms.ModelForm):
 
 
 class ProfileForm(forms.ModelForm):
-
     trikotnummer = forms.CharField(
         required=True, error_messages={"unique": "Occupied :-( Check the wiki to see which numbers are still free"}
     )

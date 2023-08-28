@@ -1,0 +1,28 @@
+{% extends "page/base_generic.html" %}
+{% block content %}
+
+<!-- <style>
+.d-flex.w-100.justify-content-between{
+    background-color: inherit;
+    border-bottom: 1px solid gray;
+}
+
+/*
+.container-fluid{
+    padding-bottom: 50px;
+} */
+</style> -->
+<div class="container">
+        
+        {% if event.toga == user %}
+        {% include "events/event_toga.html" %}
+        {% else %}
+        {% include "events/event_detail.html" %}
+        {% endif %}
+        
+        {% include "events/participation.html" %}
+        
+        {% include "events/actions.html" %}
+        
+</div>
+{% endblock %}

@@ -1,0 +1,124 @@
+<div class="row">
+    <div class="col">
+            <h3>
+                Event: {{event.name}}
+            </h3>
+            🗓️ {{ event.date|date:"d.m.y" }} - {{ event.date|date:"d.m.y" }}
+            <br>
+            📍 {{ event.location.name }}
+            {% if user.is_authenticated %}
+            {% if event.location.street is not None %}
+            - {{ event.location.street }}
+            {% endif %}
+            {% endif %}
+            {% if event.location.place is not None %}
+            - {{ event.location.place }}
+            {% endif %}
+            <hr>
+            <div>
+                {% if event.categ.name == "training" %}
+                <span class="badge badge-warning mt-0" type="button"
+                    onclick="window.location.href='{% url 'events:categ' event.categ.slug %}';">
+                    training
+                </span>
+                {% elif event.categ.name == "tournament" %}
+                <span class="badge badge-success mt-0" type="button"
+                    onclick="window.location.href='{% url 'events:categ' event.categ.slug %}';">
+                    tournament
+                </span>
+                {% elif event.categ.name == "social" %}
+                <span class="badge badge-primary mt-0" type="button"
+                    onclick="window.location.href='{% url 'events:categ' event.categ.slug %}';">
+                    social
+                </span>
+                {% else %}
+                <span class="badge badge-secondary mt-0" type="button"
+                    onclick="window.location.href='{% url 'events:categ' event.categ.slug %}';">
+                    other
+                </span>
+                {% endif %}
+            </div>
+            {% if event.categ.name == "tournament" %}
+            {% if user.is_authenticated %}
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="font-italic">
+                    Tournament organization (Toga): 
+                    {% if event.toga is None %}
+                    <div hidden="true">
+                        {{eventform.toga}}
+                    </div>
+                    <button class="btn btn-light m-0" type="submit" id="change-button" 
+                        data-new-value="{{user.pk}}"
+                        onclick="changeSelectValue('{{user.pk}}')">
+                        😎 Join Toga 💃
+                    </button>
+                    <!-- <button class="btn btn-light m-0" type="submit">
+                        😎 Join Toga 💃
+                    </button> -->
+                    <!-- <a class="btn btn-light m-0"
+                    href="{{ event.join_toga }}">
+                    😎 Join Toga 💃
+                    </a> -->
+                    
+                    {% else %}
+                    {{event.toga}}
+                    {% endif %}
+                    <br>
+                    Status: {{event.status}}
+                    {% if event.status.status == "open" %} ⭕
+                    {% elif event.status.status == "registered" %} 💌 ❓
+                    {% elif event.status.status == "accepted" %} ✔️
+                    {% elif event.status.status == "rejected" %} ❌
+                    {% else %}
+                    {% endif %}
+
+                </div>
+            {% endif %}
+            </form>
+
+            {% endif %}
+
+            <hr>
+            <small>
+                {{ event.formatted_markdown|safe  }}
+            </small>
+            <hr>
+        
+    </div>
+
+</div>
+
+<script>
+    function changeSelectValue(newValue) {
+        // this function is just finding the matching id of the choices in the 
+        // select form to the newValue argument
+        var selectField = document.getElementById("id_event-toga"); 
+        // Replace 'id_my_select_field' with the actual ID
+        
+        // Loop through the options to find the one with the desired value
+        for (var i = 0; i < selectField.options.length; i++) {
+            if (selectField.options[i].value === newValue) {
+                selectField.selectedIndex = i;
+                break;
+            }
+        }
+    }
+    // add an event listener after the document has been loaded completely
+    document.addEventListener("DOMContentLoaded", function () {
+        // retain the button on which we want to listen
+        var changeButton = document.getElementById("change-button");
+        
+        // add an event listener to the event "click" on the button obtained
+        // above.
+        changeButton.addEventListener("click", function (event) {
+            var newValue = event.target.getAttribute("data-new-value");
+            // var newValue = "0";
+            changeSelectValue(newValue);
+        });
+    });
+
+</script>
+
+

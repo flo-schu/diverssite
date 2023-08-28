@@ -1,16 +1,19 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Categ, Event, Location, PartChoice, Participation
+from .models import Categ, Event, Location, PartChoice, Participation, EventStatus
 
 
 class EventAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {"fields": ["name", "categ", "date", "location", "visibility"]}),
+        (None, {"fields": ["name", "categ", "date", "end_date", "visibility"]}),
         (
             "info",
             {
                 "fields": [
+                    "toga",
+                    "status",
+                    "location",
                     "description",
                 ],
                 "classes": ["collapse"],
@@ -25,6 +28,10 @@ class EventAdmin(admin.ModelAdmin):
 
 class CategAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
+
+
+class EventStatusAdmin(admin.ModelAdmin):
+    pass
 
 
 class LocationAdmin(admin.ModelAdmin):
@@ -43,5 +50,7 @@ admin.site.register(Location, LocationAdmin)
 
 admin.site.register(PartChoice)
 admin.site.register(Categ, CategAdmin)
+admin.site.register(EventStatus, EventStatusAdmin)
+
 
 admin.site.register(Participation, ParticipationAdmin)

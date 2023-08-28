@@ -12,8 +12,9 @@ from django.views import View
 from users.models import Profile
 from wiki.models import Article, Display
 
-from .forms import EventForm
+from .forms import EventForm, EventTogaForm, JoinTogaForm
 from .models import Categ, Event, Participation
+from diverssite.view_classes import LoggedinDetailView
 
 
 def get_categ(slug):
@@ -163,3 +164,43 @@ class IndexView(View):
                         participation.save()
 
         return HttpResponseRedirect(reverse("events:index"))
+
+
+class DetailView(LoggedinDetailView):
+    model = Event
+    template_name = "events/detail.html"
+
+    def get(self, request, id):
+        event = self.model.objects.get(id=id)
+        eventform = EventTogaForm(request.POST, request.FILES, instance=event, prefix="event")
+
+        party = Participation.objects.filter(event=event)
+
+        context = {"event": event, "eventform": eventform, "participants": party}
+
+        if request.user == event.toga:
+            eventform = EventTogaForm(instance=event, prefix="event")
+        else:
+            eventform = JoinTogaForm(instance=event, prefix="event")
+
+        context.update({"eventform": eventform})
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, id):
+        event = self.model.objects.get(id=id)
+        if request.user == event.toga:
+            eventform = EventTogaForm(request.POST, request.FILES, instance=event, prefix="event")
+        else:
+            eventform = JoinTogaForm(request.POST, request.FILES, instance=event, prefix="event")
+
+        party = Participation.objects.filter(event=event)
+
+        if eventform.is_valid():
+            event = eventform.save(commit=False)
+            event.save()
+            redirect_url = reverse("events:detail", kwargs={"id": id})
+            return HttpResponseRedirect(redirect_url)
+        else:
+            context = {"event": event, "eventform": eventform, "participants": party}
+            return render(request, self.template_name, context)

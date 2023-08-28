@@ -87,7 +87,6 @@ class ProfileView(LoginRequiredMixin, generic.DetailView):
         self.profilepicture_form = ProfilePictureForm(instance=self.profile, prefix="pic")
 
     def get(self, request):
-
         self.setup_forms(request.user)
 
         context = {
