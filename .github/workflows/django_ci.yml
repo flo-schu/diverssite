@@ -22,7 +22,7 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install .
+          pip install -r requirements.txt
       - name: Start database containers
         run: docker-compose -f "docker-compose.yml" up -d
       - name: Start django with instructions copied from readme
