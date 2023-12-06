@@ -6,7 +6,6 @@ import wiki.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("wiki", "0006_auto_20200303_2118"),
     ]
