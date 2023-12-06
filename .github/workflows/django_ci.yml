@@ -1,0 +1,33 @@
+# This CI step should spin up a database and then try to startup the Django app
+
+name: "Django CI"
+
+on: [ push, pull_request ]
+jobs:
+  black:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: [ "3.6" ]
+        os: [ ubuntu-latest ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Use example env config
+        run: |
+          cp .env.example .env
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install .
+      - name: Start database containers
+        run: docker-compose -f "docker-compose.yml" up -d
+      - name: Start django with instructions copied from readme
+        run: |
+          python manage.py runserver  # only temporary to debug error messages, break afterwards
+          python manage.py migrate
+          python manage.py loaddata fixtures.json  # install fixtures of necessary hardcoded model objects
+          python manage.py createsuperuser
