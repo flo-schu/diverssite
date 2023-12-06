@@ -26,8 +26,8 @@ jobs:
       - name: Start database containers
         run: docker-compose -f "docker-compose.yml" up -d
       - name: Start django with instructions copied from readme
+        # python manage.py runserver  # only temporary to debug error messages, break afterwards
         run: |
-          python manage.py runserver  # only temporary to debug error messages, break afterwards
           python manage.py migrate
           python manage.py loaddata fixtures.json  # install fixtures of necessary hardcoded model objects
           python manage.py createsuperuser
