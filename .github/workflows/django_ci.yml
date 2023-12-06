@@ -19,10 +19,13 @@ jobs:
       - name: Use example env config
         run: |
           cp .env.example .env
-      - name: Install Dependencies
+      - name: Install explicit dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+      - name: Install dependencies from README
+        run: |
+          pip install gunicorn psycopg2-binary
       - name: Start database containers
         run: docker-compose -f "docker-compose.yml" up -d
       - name: Start django with instructions copied from readme
