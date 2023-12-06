@@ -34,7 +34,8 @@ class Event(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, blank=True)
     visibility = models.CharField(max_length=20, default="public")
     slug = models.SlugField(max_length=50, null=True, editable=False)
-
+    team_has_secured_spot: models.BooleanField(default=None, null=True) #: true iff the team/divers have a secured spot
+    # This should only have non-null values for category tournament events (todo: ensure this)
     @property
     def formatted_markdown(self):
         return markdownify(self.description)
