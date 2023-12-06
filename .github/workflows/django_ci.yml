@@ -9,11 +9,11 @@ jobs:
     strategy:
       matrix:
         python-version: [ "3.6" ]
-        os: [ ubuntu-latest ]
+        os: [ ubuntu-20.04 ] # 20.04 still support python 3.6
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v3 # we need v3 because v4 dropped support for python 3.6
         with:
           python-version: ${{ matrix.python-version }}
       - name: Use example env config
