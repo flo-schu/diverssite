@@ -1,10 +1,11 @@
 from django.contrib import admin
-from simple_history.admin import SimpleHistoryAdmin
 from django.http import HttpResponseRedirect
+from simple_history.admin import SimpleHistoryAdmin
+
+from .forms import ArticleAdminForm
 
 # Register your models here.
-from .models import Article, Category, Display, Image, File
-from .forms import ArticleAdminForm
+from .models import Article, Category, Display, File, Image
 
 
 class FileTabularInline(admin.TabularInline):

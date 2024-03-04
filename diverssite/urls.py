@@ -18,7 +18,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-import wiki, users
+
+import users
+import wiki
 
 admin.autodiscover()
 admin.site.enable_nav_sidebar = False

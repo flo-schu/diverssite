@@ -1,14 +1,15 @@
 import io
 import os
+
 import PIL
-from PIL import ImageOps
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.core.files import File
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.files import File
+from PIL import ImageOps
 
 
 # Create your models here.

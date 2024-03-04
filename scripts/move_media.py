@@ -1,8 +1,10 @@
 # moves media files which were placed before update of naming function
 import glob
 import shutil
-from wiki.models import Image, File, file_directory_path, file_directory_path_tumbnail
+
 from django.conf import settings
+
+from wiki.models import File, Image, file_directory_path, file_directory_path_tumbnail
 
 
 def trim_leading_slash(url):
