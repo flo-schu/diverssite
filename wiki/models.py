@@ -1,13 +1,14 @@
-import os
 import io
+import os
+
 import PIL
-from PIL import ImageOps
-from django.core.files import File
 from django.conf import settings
+from django.core.files import File
 from django.db import models
 from django.utils.text import slugify
 from markdownx.models import MarkdownxField
 from markdownx.utils import markdownify
+from PIL import ImageOps
 from simple_history.models import HistoricalRecords
 
 # Create your models here.

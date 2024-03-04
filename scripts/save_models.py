@@ -1,8 +1,8 @@
 # script to save model instances. THis is done to invoke save() method of models
 # to update older entries in databases
 
-from wiki.models import Image
 from users.models import Profile
+from wiki.models import Image
 
 
 def run():
