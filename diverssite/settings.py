@@ -68,7 +68,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "simple_history.middleware.HistoryRequestMiddleware",
-    'middleware.maintenance.MaintenanceModeMiddleware',
+    "middleware.maintenance.MaintenanceModeMiddleware",
 ]
 
 ROOT_URLCONF = "diverssite.urls"
