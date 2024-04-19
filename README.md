@@ -250,6 +250,11 @@ for changes that affect a database retrospectively, use of django-extensions `ru
 
 ## Maintenance
 
+when you do changes on the server, first put the server into maintenance mode
+in the .env file set `MAINTENANCE_MODE=on` then `sudo systemctl restart gunicorn`
+reload the website. It should now display a message that the site is currently 
+unavailable.
+
 ### server
 
 #### server restart
