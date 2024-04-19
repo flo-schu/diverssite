@@ -68,6 +68,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "simple_history.middleware.HistoryRequestMiddleware",
+    'middleware.maintenance.MaintenanceModeMiddleware',
 ]
 
 ROOT_URLCONF = "diverssite.urls"
@@ -176,3 +177,4 @@ SECURE_SSL_REDIRECT = os.environ.get("SSL_REDIRECT", "") != "False"
 
 DBBACKUP_STORAGE = "django.core.files.storage.FileSystemStorage"
 DBBACKUP_STORAGE_OPTIONS = {"location": os.environ.get("BACKUP_LOCATION", "backup")}
+MAINTENANCE_MODE = os.environ.get("MAINTENANCE_MODE")
