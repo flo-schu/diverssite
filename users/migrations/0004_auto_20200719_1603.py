@@ -6,7 +6,6 @@ import users.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("users", "0003_profile_picture"),
     ]

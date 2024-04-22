@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
@@ -5,9 +6,8 @@ from django.contrib.auth.views import LoginView
 from django.forms import formset_factory
 from django.http import HttpResponseRedirect
 from django.http.response import FileResponse
-from django.shortcuts import render, reverse, get_object_or_404
+from django.shortcuts import get_object_or_404, render, reverse
 from django.views import generic
-from django.contrib.auth.decorators import login_required
 
 from .forms import AddressForm, ProfileForm, ProfilePictureForm, SignupForm, UpdateUserForm
 from .models import Profile, Settings
@@ -87,7 +87,6 @@ class ProfileView(LoginRequiredMixin, generic.DetailView):
         self.profilepicture_form = ProfilePictureForm(instance=self.profile, prefix="pic")
 
     def get(self, request):
-
         self.setup_forms(request.user)
 
         context = {
