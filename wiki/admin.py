@@ -56,7 +56,6 @@ class ArticleAdmin(SimpleHistoryAdmin):
             return super(ArticleAdmin, self).response_change(request, obj)
 
 
-
 admin.site.register(Image)
 admin.site.register(Category)
 admin.site.register(Display)
