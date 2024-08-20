@@ -48,9 +48,12 @@ class ArticleAdmin(SimpleHistoryAdmin):
         This makes the response go to the newly created
         model's change page without using reverse
         """
-        _, redirect_page = request.get_full_path().split("?next=")
-
-        return HttpResponseRedirect(redirect_page)
+        full_path = request.get_full_path()
+        if "?next=" in full_path:
+            _, redirect_page = request.get_full_path().split("?next=")
+            return HttpResponseRedirect(redirect_page)
+        else:
+            return super(ArticleAdmin, self).response_change(request, obj)
 
 
 admin.site.register(Image)
